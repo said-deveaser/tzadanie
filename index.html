@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles/fonts/fonts.css">
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <header class="header">
+        <h1 class="header__title">Реестер работников</h1>
+        <button class="btn" onclick="store.action({type: 'ADD_PERSON'})">&#10010; Добавить</button>
+    </header>
+    <main>
+        <div class="table-wrapper">
+            <table class="table" id="staff-table">
+                <tr class="table__row table__row--header">
+                    <th class="table__cell">Имя</th>
+                    <th class="table__cell">Должность</th>
+                    <th class="table__cell">Статусы</th>
+                    <th class="table__cell">Оклады</th>
+                    <th class="table__cell">Действия</th>
+                </tr>
+
+            </table>
+        </div>
+    </main>
+
+<!--    HTML Layouts table-row for JS using -->
+    <div style="display: none">
+        <table>
+            <tr class="table__row" id="table-item" data-table-row>
+                <td class="table__cell">
+                    <textarea class="table__textarea" data-id="0" data-name-field placeholder="Имя работника"
+                              onchange="store.action({type: 'CHANGE_NAME', el: this})">Иван Иваныч</textarea>
+                </td>
+                <td class="table__cell">
+                    <textarea class="table__textarea" data-id="0" data-position-field placeholder="Должность"
+                        onchange="store.action({type: 'CHANGE_POSITION', el: this})">Директор</textarea>
+                </td>
+                <td class="table__cell">
+                    <ul class="table__ul" data-status-ul>
+                        <li class="table__li table__li-btn-wrapper">
+                            <button class="table__btn"
+                                    data-id="0"
+                                    data-status-id="0"
+                                    onclick="store.action({type: 'ADD_STATUS', el: this})"
+                            >Добавить статус</button>
+                        </li>
+                        <li class="table__li" data-status-item>
+                                    <span>
+                                        <button class="icon-btn icon-btn--red"
+                                                data-id="0"
+                                                data-status-id="0"
+                                                onclick="store.action({type: 'DELETE_STATUS', el: this})"
+                                        >
+                                            &#10006;
+                                        </button>
+                                    </span>
+                            <span class="table-text-field">
+                                    <input class="table__textarea" placeholder="Статус"
+                                           data-id="0"
+                                           data-status-id="0"
+                                           value="резидент" data-status-field
+                                           onchange="store.action({type: 'CHANGE_STATUS', el: this})"
+                                    >
+                            </span>
+                        </li>
+                    </ul>
+                </td>
+                <td class="table__cell">
+                    <ul class="table__ul" data-salary-ul>
+                        <li class="table__li table__li-btn-wrapper">
+                            <button class="table__btn"
+                                data-id="0"
+                                onclick="store.action({type: 'ADD_SALARY', el: this})"
+                            >Добавить оклад</button>
+                        </li>
+                        <li class="table__li" data-salary-item>
+                                    <span>
+                                        <button class="icon-btn icon-btn--red"
+                                                data-salary-id="0"
+                                                data-id="0"
+                                                onclick="store.action({type: 'DELETE_SALARY', el: this})"
+                                        >
+                                            &#10006;
+                                        </button>
+                                    </span>
+                            <span class="table-text-field" >
+                                        <input class="table__textarea" value="10.10.2010" placeholder="Дата"
+                                               data-salary-date
+                                               data-id="0"
+                                               data-salary-id="0"
+                                               onchange="store.action({type: 'CHANGE_SALARY_DATE', el: this})"
+                                               >
+                                    </span>
+                            <span>-</span>
+                            <span class="table-text-field">
+                                        <input class="table__textarea" value="85000" placeholder="Сумма оклада"
+                                               data-id="0"
+                                               data-salary-id="0"
+                                               data-salary-sum
+                                               onchange="store.action({type: 'CHANGE_SALARY_SUM', el: this})"
+                                        >
+
+                            </span>
+                        </li>
+                    </ul>
+                </td>
+                <td class="table__cell">
+                    <div class="table__btn-wrapper">
+                        <!--                            <button class="icon-btn">-->
+                        <!--                                &#9998;-->
+                        <!--                            </button>-->
+
+                        <button class="icon-btn icon-btn--red" data-id="0"
+                                onclick="store.action({type: 'DELETE_PERSON', id: this.getAttribute('data-id')})">
+                            удалить
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        store.init('#staff-table');
+        store.getData('/ajax.php');
+        store.setData();
+
+    </script>
+</body>
+</html>
